@@ -1,0 +1,33 @@
+{
+  "name": "react-touch-pull",
+  "version": "1.0.0",
+  "description": "something simple but customizable",
+  "main": "index.js",
+  "scripts": {
+    "dev":"next",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wenpingzheng/react-touch-pull.git"
+  },
+  "keywords": [
+    "next.js",
+    "javascript",
+    "mobile",
+    "pull",
+    "react",
+    "react-dom"
+  ],
+  "author": "wpzheng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wenpingzheng/react-touch-pull/issues"
+  },
+  "homepage": "https://github.com/wenpingzheng/react-touch-pull#readme",
+  "dependencies": {
+    "next": "^4.1.4",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1"
+  }
+}
