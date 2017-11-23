@@ -19,11 +19,23 @@ export default class extends Component {
   componentDidMount() {
 
   }
-
+  canLoad = true
+  loadMore = (e) => {
+    console.log('loadMore')
+    if(this.canLoad) {
+      this.canLoad= false;
+      setTimeout(()=>{
+        e()
+        this.canLoad = true
+      },5000)
+    }
+  }
   render() {
     return (
       <Layout>
-        <TouchPull>
+        <TouchPull 
+          onLoadMore = {(e)=>this.loadMore(e)}
+        >
           <div>
             <ul>
               <li>这是第一行数据</li>
@@ -44,6 +56,7 @@ export default class extends Component {
               <li>这是第四行数据</li>
               <li>这是第五行数据</li>
               <li>这是第六行数据</li>
+              
             </ul>
           </div>
         </TouchPull>
