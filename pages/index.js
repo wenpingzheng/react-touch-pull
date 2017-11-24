@@ -20,12 +20,12 @@ export default class extends Component {
 
   }
   canLoad = true
-  loadMore = (e) => {
+  refresh = (resolve,reject) => {
     console.log('loadMore')
     if(this.canLoad) {
       this.canLoad= false;
       setTimeout(()=>{
-        e()
+        resolve()
         this.canLoad = true
       },5000)
     }
@@ -34,7 +34,7 @@ export default class extends Component {
     return (
       <Layout>
         <TouchPull 
-          onLoadMore = {(e)=>this.loadMore(e)}
+          onRefresh={(resolve, reject) => this.refresh(resolve, reject)}
         >
           <div>
             <ul>
