@@ -59,22 +59,25 @@ export default class extends Component {
   }
 
   touchMove = (e) => {
+   
     if (!this.canTouchLoad()) {
       window.addEventListener('touchmove', (e) => {
         e.preventDefault()
       })
       return
     }
-    if (!this.canTouchLoad) return
+    
     let scrollTop = this.refs.pullpanel.scrollTop
     let distance = e.touches[0].clientY - this._initialTouch.clientY
     if (distance > 0 && scrollTop <= 0) {
       let pullDistance = distance - this._initialTouch.scrollTop
-      let pullHeight = this.easing(pullDistance)
       if (pullDistance < 0) {
         pullDistance = 0
         this._initialTouch.scrollTop = distance
       }
+      let pullHeight = this.easing(pullDistance)
+      if (pullHeight) e.preventDefault();// 减弱滚动
+
       this.setState({
         loaderState: pullHeight > STATS.distanceToRefresh ? STATS.enough : STATS.pulling,
         pullHeight: pullHeight
@@ -145,10 +148,31 @@ export default class extends Component {
         <div className="pull-content" style={style}>
           {this.props.children}
         </div>
+       
         <style jsx>{`
+         .state-pulling .pull-text-inner:after{
+          content:'下拉加载';
+        }
+        .state-reset .pull-text-inner:after{
+          content:'加载完成';
+        }
+        .state-pulling.enough .pull-text-inner:after{
+          content:'松开加载';
+        }
+        .state-refreshing .pull-text-inner:after{
+          content:'正在加载';
+        }
+        .state-refreshed .pull-text-inner:after{
+          content:'加载完成';
+        }
+
           .pull-content{
             position:relative;
             background-color:#fff;
+           
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;// enhance ios scrolling
+            overflow-scrolling: touch;// enhance ios scrolling
           }
           .loader-container{
             position:relative;
@@ -160,10 +184,12 @@ export default class extends Component {
             overflow-y:hidden;
           }
           .pull-text{
+           
             width:100%;
             position:absolute;
             left:0;
             top:0;
+            right:0;
             text-align:center;
             overflow:hidden;
             height:60px;
@@ -234,22 +260,7 @@ export default class extends Component {
 
           }
 
-          .state-pulling .pull-text-inner:after{
-            content:'下拉加载';
-          }
-          .state-reset .pull-text-inner:after{
-            content:'加载完成';
-          }
-          .state-pulling.enough .pull-text-inner:after{
-            content:'松开加载';
-          }
-          .state-refreshing .pull-text-inner:after{
-            content:'正在加载';
-          }
-          .state-refreshed .pull-text-inner:after{
-            content:'加载完成';
-          }
-
+         
           @-webkit-keyframes rotating {
             from{
               -webkit-transform:rotate(0);
